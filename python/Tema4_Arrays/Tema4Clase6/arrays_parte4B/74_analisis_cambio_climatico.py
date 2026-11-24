@@ -29,33 +29,38 @@ clima = np.array([
     [22, 70, 1011, 12]
 ])
 
-# Creamos listas con los meses
-meses = np.array(clima[:,3])
-print(meses)
-# creamos las listas con los demas datos
-temperatura = np.array(int(clima[:,0]))
-humedad = np.array(int(clima[:,1]))
-presion = np.array(int(clima[:,2]))
+# extraer los meses
 
-# Creamos la lista con los nombres de los meses
-nombre_meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+meses = clima[:,3]
 
-# Inicializamos una lista para agrupar datos:
-conjunto_datos_mes = []
-# Creamos el filtro, para agrupar los datos en meses
-for i in range(1,13):
-	filtro = clima[:,3] == i
-	datos_por_mes = np.array(clima[filtro])
-	suma_temperatura = np.sum(temperatura)
-	suma_humedad = np.sum(humedad)
-	suma_presion = np.sum(presion)
-	
-	
-	conjunto_datos_mes.append(datos_por_mes)
-	conjunto_datos_mes.append(suma_temperatura)
-	conjunto_datos_mes.append(suma_humedad)
-	conjunto_datos_mes.append(suma_presion)	
+
+# extraer las columnas de temperatura, humedad y presion atmosferica
+temperatura = clima[:,0]
+humedad = clima[:,1]
+presion_atmosferica = clima[:,2]
+
+# calcular las medias de cada columna, para eso, tener un array donde se guardaran las medias
+temp_mes = np.zeros(12)
+humedad_mes = np.zeros(12)
+presion_mes = np.zeros(12)
+
+# recorrer los arrays, con el mismo codigo-mes y calcular la media
+for i in range(12):
+	temp_mes[i] = np.mean(temperatura[meses == i+1])
+	humedad_mes[i] = np.mean(humedad[meses == i +1])
+	presion_mes[i] = np.mean(presion_atmosferica[meses == i+1])
 	
 	print("----------")
+	print(f"La temperatura del mes {i+1} es {temp_mes[i]}")
+	print(f"La humedad media del mes {i+1} es {humedad_mes[i]}")
+	print(f"La presion media del mes {i+1} es {presion_mes[i]}")
+	print("----------")
+	
+	
+temp_anual = np.mean(temperatura)
+humedad_anual = np.mean(humedad)
+presion_anual =	np.mean(presion_atmosferica)
 
-print(conjunto_datos_mes)
+print(f"Las medias anuales de las temperaturas es {temp_anual}")
+print(f"Las medias anuales de la humendad es {humedad_anual}")
+print(f"Las medias anuales de la presion atmosferica es {presion_anual}")
